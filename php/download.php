@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once 'db-config.php';
 
 // Retrieve the presentation ID from the URL parameter
 $id = $_GET['id'];

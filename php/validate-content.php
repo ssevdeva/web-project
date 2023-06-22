@@ -1,5 +1,5 @@
 <?php
-require_once 'HTMLPurifier/HTMLPurifier.auto.php'; // Path to HTML Purifier library
+require_once '../htmlpurifier-4.15.0/library/HTMLPurifier.auto.php'; // Path to HTML Purifier library
 
 function validateAndSanitizeSlides($slides) {
     // Sanitize the user-input HTML using HTML Purifier

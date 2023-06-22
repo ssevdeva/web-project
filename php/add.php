@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once 'db-config.php';
 require_once 'validate.php';
 
 // Establish database connection
