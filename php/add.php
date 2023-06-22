@@ -1,6 +1,10 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once 'db-config.php';
-require_once 'validate.php';
+require_once 'validate-content.php';
 
 // Establish database connection
 $db = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
@@ -16,9 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sanitizedSlides = validateAndSanitizeSlides($slides);
 
     // Save the sanitized presentation to the database
-    $stmt = $db->prepare("INSERT INTO presentations (title, slides) VALUES (:title, :slides)");
-    $stmt->bindParam(':title', $title);
-    $stmt->bindParam(':slides', serialize($sanitizedSlides));
+    $stmt = $db->prepare("INSERT INTO presentations (topic, tag, content) VALUES (:topic, :tag, :content)");
+    $stmt->bindValue(':topic', $title);
+    $stmt->bindValue(':tag', 'some tag'); // Empty tag for now, modify as per your requirement
+    $stmt->bindValue(':content', serialize($sanitizedSlides));
     $stmt->execute();
 
     // Prompt the user to download the presentation
@@ -67,23 +72,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div id="preview-container"></div>
 
     <script>
-        // JavaScript code to handle dynamic slide creation and preview
-        document.getElementById('add-slide').addEventListener('click', function () {
-            var slidesContainer = document.getElementById('slides-container');
-            var previewContainer = document.getElementById('preview-container');
+    // JavaScript code to handle dynamic slide creation and preview
+    document.getElementById('add-slide').addEventListener('click', function () {
+        var slidesContainer = document.getElementById('slides-container');
+        var previewContainer = document.getElementById('preview-container');
 
-            // Create slide content input field
-            var slideContentInput = document.createElement('textarea');
-            slideContentInput.setAttribute('name', 'slides[]');
-            slideContentInput.setAttribute('placeholder', 'Enter slide content in HTML format');
-            slidesContainer.appendChild(slideContentInput);
+        // Create slide content input field
+        var slideContentInput = document.createElement('textarea');
+        slideContentInput.setAttribute('name', 'slides[]');
+        slideContentInput.setAttribute('placeholder', 'Enter slide content in HTML format');
+        slidesContainer.appendChild(slideContentInput);
 
-            // Update the preview container
-            var previewSlide = document.createElement('div');
-            previewSlide.className = 'preview-slide';
-            previewSlide.innerHTML = slideContentInput.value;
-            previewContainer.appendChild(previewSlide);
+        // Update the preview container when the input value changes
+        slideContentInput.addEventListener('input', function () {
+            // Clear the existing content in the preview container
+            previewContainer.innerHTML = '';
+
+            // Get all the slide content inputs
+            var slideContentInputs = document.querySelectorAll('textarea[name="slides[]"]');
+
+            // Iterate over each slide content input and update the preview container
+            slideContentInputs.forEach(function (input) {
+                var previewSlide = document.createElement('div');
+                previewSlide.className = 'preview-slide';
+                previewSlide.innerHTML = input.value;
+                previewContainer.appendChild(previewSlide);
+            });
         });
-    </script>
+    });
+</script>
 </body>
 </html>
