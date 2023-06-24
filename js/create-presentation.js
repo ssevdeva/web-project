@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // JavaScript code to handle dynamic slide creation and preview
+    
+  // Handle dynamic slide creation and preview
     document.getElementById('add-slide').addEventListener('click', function () {
       var slidesContainer = document.getElementById('slides-container');
       var previewContainer = document.getElementById('preview-container');
@@ -12,10 +13,8 @@ document.addEventListener("DOMContentLoaded", function() {
   
       // Update the preview container when the input value changes
       slideContentInput.addEventListener('input', function () {
-        // Clear the existing content in the preview container
+        
         previewContainer.innerHTML = '';
-  
-        // Get all the slide content inputs
         var slideContentInputs = document.querySelectorAll('textarea[name="slides[]"]');
   
         // Iterate over each slide content input and update the preview container
@@ -50,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (tagsTextarea == null) {
         return false;
       }
-      var tags = tagsTextarea.value.trim(); // Trim the input value
+      var tags = tagsTextarea.value.trim();
       var trimmedTags = tags.split(',').map(function(tag) {
         return tag.trim();
       });

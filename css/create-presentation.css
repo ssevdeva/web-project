@@ -51,7 +51,7 @@ body {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    resize: none; /* Disable textarea resizing */
+    resize: none;
   }
   
   button[type="button"] {

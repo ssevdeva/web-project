@@ -7,16 +7,12 @@ require_once 'validate-content.php';
 
 // Function to split tags and treat them as distinct entities
 function splitTags($tagsString) {
-    // Split the tags string into individual tags
     $tagsArray = explode(",", $tagsString);
 
-    // Trim whitespace from each tag and remove any empty tags
     $tagsArray = array_map('trim', $tagsArray);
     $tagsArray = array_filter($tagsArray);
 
-    // Remove duplicate tags
     $tagsArray = array_unique($tagsArray);
-
     return $tagsArray;
 }
 
@@ -27,7 +23,6 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Retrieve the presentation data from the form
     $title = trim($_POST['title']);
     $slides = $_POST['slides'];
     $tags = $_POST['tags'];
@@ -52,14 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Split and sanitize the tags
     $tagsArray = splitTags($tags);
-
-    // Join the tags back into a string
     $sanitizedTags = implode(", ", $tagsArray);
 
     // Validate and sanitize the slides using the function from validate.php
     $sanitizedSlides = validateAndSanitizeSlides($slides);
 
-    // Check if sanitized slides are empty
     if (empty($sanitizedSlides)) {
         echo "<script>";
         echo "alert('Please add valid presentation content.');";
@@ -75,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindValue(':content', serialize($sanitizedSlides));
     $stmt->execute();
 
-    // Retrieve the last inserted presentation ID
     $lastInsertId = $db->lastInsertId();
 
     // Prompt the user to download the presentation
@@ -96,13 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
     }
 
-// Fetch existing tags from the database
-$stmt = $db->prepare("SELECT DISTINCT tag FROM presentations");
-$stmt->execute();
-$existingTags = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-// Split the existing tags into individual tags
-$existingTags = splitTags(implode(',', $existingTags));
+    // Fetch existing tags from the database
+    $stmt = $db->prepare("SELECT DISTINCT tag FROM presentations");
+    $stmt->execute();
+    $existingTags = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    
+    $existingTags = splitTags(implode(',', $existingTags));
 ?>
 
 <!DOCTYPE html>
