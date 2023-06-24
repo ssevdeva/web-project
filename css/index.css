@@ -1,10 +1,12 @@
 @import 'colors.css';
 
 body {
-    font-family: 'Alegreya Sans', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 20px;
     background-color: var(--color-background);
+    background-size: cover;
+    position: relative;
   }
   
   .container {
@@ -17,7 +19,7 @@ body {
     font-size: 24px;
   }
   
-  .create-presentation {
+  .navButton {
     float: right;
     font-size: 16px;
     text-decoration: none;
