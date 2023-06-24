@@ -11,6 +11,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
     // Retrieve the presentation data from the form
     $title = $_POST['title'];
     $slides = $_POST['slides'];
@@ -22,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "alert('Please add slides before creating the presentation.');";
         echo "window.location.href = 'create-presentation.php';";
         echo "</script>";
-        exit; // Stop further execution
+        exit;
     }
 
     // Validate and sanitize the slides using the function from validate.php
@@ -43,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "    window.location.href = 'create-presentation.php';";
     echo "}";
     echo "</script>";
-    exit; // Stop further execution
+    exit;
 }
 
 // Fetch existing tags from the database
@@ -63,14 +64,24 @@ $existingTags = $stmt->fetchAll(PDO::FETCH_COLUMN);
     <script src="../js/create-presentation.js"></script>
 </head>
 <body>
+    <a class="navButton" href="index.php">WebSlides</a>
     <h1>Create a Presentation</h1>
 
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="return validateForm()">
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <label for="title">Presentation Title:</label>
         <input type="text" name="title" required><br>
 
-        <label for="tags">Tags:</label>
-        <textarea name="tags" placeholder="Enter tags separated by comma"></textarea><br>
+        <label id="tagsLabel" for="tags">Tags:</label>
+        <input id="tagsInput" type="text" name="title" placeholder="Enter tags separated by comma" required><br>
+
+        <div id="existingTags">
+            <label>Existing Tags:</label>
+            <div id="tagList">
+                <?php foreach ($existingTags as $tag): ?>
+                    <span class="tag"><?php echo $tag; ?></span>
+                <?php endforeach; ?>
+            </div>
+        </div>
 
         <h3>Slides:</h3>
         <button type="button" id="add-slide">Add Slide</button>

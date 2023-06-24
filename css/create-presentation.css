@@ -10,6 +10,16 @@ body {
   h1 {
     color: #434BD9;
   }
+
+  .navButton {
+    float: right;
+    font-size: 16px;
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+  }
   
   form {
     margin-bottom: 20px;
@@ -20,6 +30,20 @@ body {
   }
   
   input[type="text"] {
+    width: 25%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  #tagsLabel {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  #tagsInput {
+    width: 40%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -40,10 +64,11 @@ body {
   }
   
   #slides-container textarea {
-    width: 100%;
+    width: 50%;
     height: 100px;
     padding: 10px;
     margin-bottom: 10px;
+    margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
