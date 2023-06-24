@@ -16,7 +16,6 @@ function splitTags($tagsString) {
     return $tagsArray;
 }
 
-// Establish database connection
 $db = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -27,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $slides = $_POST['slides'];
     $tags = $_POST['tags'];
 
-    // Check if the title is empty after trimming or consists only of whitespace
     if (empty($title)) {
         echo "<script>";
         echo "alert('Please enter a valid presentation title.');";
@@ -36,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Check if slides are empty
     if (!isset($slides) || $slides === null) {
         echo "<script>";
         echo "alert('Please add slides before creating the presentation.');";
@@ -45,11 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Split and sanitize the tags
     $tagsArray = splitTags($tags);
     $sanitizedTags = implode(", ", $tagsArray);
 
-    // Validate and sanitize the slides using the function from validate.php
     $sanitizedSlides = validateAndSanitizeSlides($slides);
 
     if (empty($sanitizedSlides)) {
@@ -91,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $db->prepare("SELECT DISTINCT tag FROM presentations");
     $stmt->execute();
     $existingTags = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    
+
     $existingTags = splitTags(implode(',', $existingTags));
 ?>
 

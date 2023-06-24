@@ -45,20 +45,16 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
     exit;
 }
 
-// Retrieve the presentation ID
 $presentationId = $_GET['id'];
 
-// Establish database connection
 $db = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Fetch the presentation from the database using the ID
 $stmt = $db->prepare("SELECT * FROM presentations WHERE id = :id");
 $stmt->bindValue(':id', $presentationId);
 $stmt->execute();
 $presentation = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Check if the presentation exists
 if (!$presentation) {
     echo "<script>";
     echo "alert('Presentation not found.');";
@@ -67,7 +63,6 @@ if (!$presentation) {
     exit;
 }
 
-// Get the topic of the presentation
 $topic = $presentation['topic'];
 
 // Download the presentation

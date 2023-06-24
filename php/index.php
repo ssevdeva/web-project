@@ -11,14 +11,11 @@
         <a class ="navButton" href="create-presentation.php">Create Presentation</a>
 
         <?php
-        // Database configuration
         require_once 'db-config.php';
 
-        // Establish database connection
         $db = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Fetch presentations from the database
         $stmt = $db->query("SELECT * FROM presentations");
         $presentations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
