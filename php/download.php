@@ -7,34 +7,55 @@ require_once 'db-config.php';
 function buildPresentation($slides, $title) {
     $html = '<html>';
     $html .= '<head>';
-    $html .= '<meta charset="UTF-8">';
-    $html .= '<style>';
-    $html .= '.navbar { background-color: #333; color: #fff; padding: 10px; }';
-    $html .= '.navbar h1 { margin: 0; }';
-    $html .= '.slide { padding: 20px; }';
-    $html .= '.navigation { position: fixed; top: 50%; right: 20px; transform: translateY(-50%); }';
-    $html .= '</style>';
+    $html .= '<meta content="width=device-width, initial-scale=1" name="viewport" charset="UTF-8">';
+    $html .= '<title>' . $title . '</title>';
+    // $html .= '<style>';
+    // $html .= '.navbar { background-color: #333; color: #fff; padding: 10px; }';
+    // $html .= '.navbar h1 { margin: 0; }';
+    // $html .= '.slide { padding: 20px; }';
+    // $html .= '.navigation { position: fixed; top: 50%; right: 20px; transform: translateY(-50%); }';
+    // $html .= '</style>';
     $html .= '</head>';
     $html .= '<body>';
 
-    // Navbar
-    $html .= '<div class="navbar">';
+    $html .= '<header>';
     $html .= '<h1>' . $title . '</h1>';
-    $html .= '</div>';
+    $html .= '<nav>';
+    $html .= '<ul>';
+    $html .= '<li>';
+    $html .= '<button id="prev-btn" title="Previous slide">Previous Slide</button>';
+    $html .= '</li>';
+    $html .= '<li>';
+    $html .= '<span id="slide-number"></span>';
+    $html .= '/';
+    $html .= '<span id="slide-total"></span>';
+    $html .= '</li>';
+    $html .= '<li>';
+    $html .= '<button id="next-btn" title="Next Slide">Next Slide</button>';
+    $html .= '</li>';
+    $html .= '</ul>';
+    $html .= '</nav>';
+    $html .= '</header>';
 
     // Slides
+    $html .= '<div id="deck">';
     foreach ($slides as $index => $slide) {
-        $html .= '<div class="slide">';
+        $slideNumber = $index + 1;
+        $html .= '<section id="slide-' . $slideNumber . '">';
+        $html .= '<hgroup>';
+        $html .= '<h1>' . $title . '</h1>';
+        $html .= '</hgroup>';
         $html .= $slide;
-        $html .= '</div>';
-        $html .= '<hr>';
+        $html .= '</section>';
     }
+    $html .= '</div>';
 
     $html .= '</body>';
     $html .= '</html>';
 
     return $html;
 }
+
 
 // Check if the presentation ID is provided
 if (!isset($_GET['id']) || empty($_GET['id'])) {

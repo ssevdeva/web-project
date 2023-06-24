@@ -95,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Presentation Creator</title>
     <link rel="stylesheet" type="text/css" href="../css/create-presentation.css">
-    <script src="../js/create-presentation.js"></script>
 </head>
 <body>
     <a class="nav-button" href="index.php">WebSlides</a>
@@ -130,5 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <h2>Preview:</h2>
     <div id="preview-container"></div>
+    <script src="../js/create-presentation.js"></script>
 </body>
 </html>
