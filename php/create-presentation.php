@@ -50,6 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Split and sanitize the tags
+    $tagsArray = splitTags($tags);
+
+    // Join the tags back into a string
+    $sanitizedTags = implode(", ", $tagsArray);
+
     // Validate and sanitize the slides using the function from validate.php
     $sanitizedSlides = validateAndSanitizeSlides($slides);
 
@@ -65,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Save the sanitized presentation to the database
     $stmt = $db->prepare("INSERT INTO presentations (topic, tag, content) VALUES (:topic, :tag, :content)");
     $stmt->bindValue(':topic', $title);
-    $stmt->bindValue(':tag', $tags);
+    $stmt->bindValue(':tag', $sanitizedTags);
     $stmt->bindValue(':content', serialize($sanitizedSlides));
     $stmt->execute();
 
@@ -111,17 +117,17 @@ $existingTags = splitTags(implode(',', $existingTags));
     <h1>Create a Presentation</h1>
 
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <label for="title">Presentation Title:</label>
-        <input type="text" name="title" required><br>
+        <label for="title-input">Presentation Title:</label>
+        <input id="title-input" type="text" name="title" required><br>
 
-        <label id="tagsLabel" for="tags">Tags:</label>
-        <textarea id="tagsTextarea" name="tags" placeholder="Enter tags separated by comma" maxlength="50" required></textarea><br>
+        <label id="tags-label" for="tags-textarea">Tags:</label>
+        <textarea id="tags-textarea" name="tags" placeholder="Enter tags separated by comma" maxlength="50" required></textarea><br>
 
         <div id="existingTags">
             <label>Existing Tags:</label>
-            <div id="tagList">
+            <div id="tag-list">
                 <?php foreach ($existingTags as $tag): ?>
-                    <button type="button" class="tag"><?php echo $tag; ?></button>
+                    <button type="button" class="tag" onclick="addTag('<?php echo $tag; ?>')"><?php echo $tag; ?></button>
                 <?php endforeach; ?>
             </div>
         </div>

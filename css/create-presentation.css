@@ -39,12 +39,12 @@ body {
     border-radius: 4px;
   }
 
-  #tagsLabel {
+  #tags-label {
     display: block;
     margin-bottom: 5px;
   }
   
-  #tagsTextarea {
+  #tags-textarea {
     width: 40%;
     height: 1.3em;
     padding: 10px;

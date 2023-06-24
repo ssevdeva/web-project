@@ -70,4 +70,15 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
   });
-  
+
+// Function to handle adding tag text to the tags textarea
+function addTag(tagText) {
+  var tagsTextarea = document.getElementById('tags-textarea');
+  var currentTags = tagsTextarea.value.trim();
+
+  if (currentTags.length === 0) {
+        tagsTextarea.value = tagText;
+  } else {
+    tagsTextarea.value = currentTags + ', ' + tagText;
+  }
+}
