@@ -72,23 +72,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve the last inserted presentation ID
     $lastInsertId = $db->lastInsertId();
 
-// Prompt the user to download the presentation
-echo "<script>";
-echo "document.addEventListener('DOMContentLoaded', function() {";
-echo "    if (confirm('Presentation created successfully! Do you want to download it?')) {";
-echo "        var downloadLink = document.createElement('a');";
-echo "        downloadLink.href = 'download.php?id=" . $lastInsertId . "';";
-echo "        downloadLink.download = 'presentation.html';";
-echo "        downloadLink.style.display = 'none';";
-echo "        document.body.appendChild(downloadLink);";
-echo "        downloadLink.click();";
-echo "        document.body.removeChild(downloadLink);";
-echo "     };";
-echo "window.location.href = 'create-presentation.php';";
-echo "});";
-echo "</script>";
-exit;
-}
+    // Prompt the user to download the presentation
+    echo "<script>";
+    echo "document.addEventListener('DOMContentLoaded', function() {";
+    echo "    if (confirm('Presentation created successfully! Do you want to download it?')) {";
+    echo "        var downloadLink = document.createElement('a');";
+    echo "        downloadLink.href = 'download.php?id=" . $lastInsertId . "';";
+    echo "        downloadLink.download = 'presentation.html';";
+    echo "        downloadLink.style.display = 'none';";
+    echo "        document.body.appendChild(downloadLink);";
+    echo "        downloadLink.click();";
+    echo "        document.body.removeChild(downloadLink);";
+    echo "     };";
+    echo "window.location.href = 'create-presentation.php';";
+    echo "});";
+    echo "</script>";
+    exit;
+    }
 
 // Fetch existing tags from the database
 $stmt = $db->prepare("SELECT DISTINCT tag FROM presentations");

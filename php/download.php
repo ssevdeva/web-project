@@ -4,17 +4,30 @@ ini_set('display_errors', 1);
 
 require_once 'db-config.php';
 
-function buildPresentation($slides) {
+function buildPresentation($slides, $title) {
     $html = '<html>';
     $html .= '<head>';
-    // Add any necessary stylesheets or scripts
+    $html .= '<meta charset="UTF-8">';
+    $html .= '<style>';
+    $html .= '.navbar { background-color: #333; color: #fff; padding: 10px; }';
+    $html .= '.navbar h1 { margin: 0; }';
+    $html .= '.slide { padding: 20px; }';
+    $html .= '.navigation { position: fixed; top: 50%; right: 20px; transform: translateY(-50%); }';
+    $html .= '</style>';
     $html .= '</head>';
     $html .= '<body>';
 
-    foreach ($slides as $slide) {
-        $html .= '<section>';
+    // Navbar
+    $html .= '<div class="navbar">';
+    $html .= '<h1>' . $title . '</h1>';
+    $html .= '</div>';
+
+    // Slides
+    foreach ($slides as $index => $slide) {
+        $html .= '<div class="slide">';
         $html .= $slide;
-        $html .= '</section>';
+        $html .= '</div>';
+        $html .= '<hr>';
     }
 
     $html .= '</body>';
@@ -59,7 +72,7 @@ $topic = $presentation['topic'];
 
 // Download the presentation
 $fileName = str_replace(' ', '_', trim($topic)) . ".html";
-$fileContent = buildPresentation(unserialize($presentation['content']));
+$fileContent = buildPresentation(unserialize($presentation['content']), $topic);
 
 // Set the appropriate headers for downloading
 header('Content-Type: text/html');
