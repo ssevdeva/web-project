@@ -1,8 +1,10 @@
-/* CSS styles for the page */
+@import 'colors.css';
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Alegreya Sans', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 20px;
+    background-color: var(--color-background);
   }
   
   .container {
