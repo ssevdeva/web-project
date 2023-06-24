@@ -3,16 +3,12 @@
 <head>
     <title>Web Slides</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/index.css">
-    <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 <body>
     <div class="container">
         <h1>Web Slides</h1>
-        <a href="create-presentation.php" class="create-presentation">Create Presentation</a>
+        <a class ="navButton" href="create-presentation.php">Create Presentation</a>
 
         <?php
         // Database configuration
