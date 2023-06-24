@@ -5,6 +5,21 @@ ini_set('display_errors', 1);
 require_once 'db-config.php';
 require_once 'validate-content.php';
 
+// Function to split tags and treat them as distinct entities
+function splitTags($tagsString) {
+    // Split the tags string into individual tags
+    $tagsArray = explode(",", $tagsString);
+
+    // Trim whitespace from each tag and remove any empty tags
+    $tagsArray = array_map('trim', $tagsArray);
+    $tagsArray = array_filter($tagsArray);
+
+    // Remove duplicate tags
+    $tagsArray = array_unique($tagsArray);
+
+    return $tagsArray;
+}
+
 // Establish database connection
 $db = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -13,9 +28,18 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Retrieve the presentation data from the form
-    $title = $_POST['title'];
+    $title = trim($_POST['title']);
     $slides = $_POST['slides'];
     $tags = $_POST['tags'];
+
+    // Check if the title is empty after trimming or consists only of whitespace
+    if (empty($title)) {
+        echo "<script>";
+        echo "alert('Please enter a valid presentation title.');";
+        echo "window.location.href = 'create-presentation.php';";
+        echo "</script>";
+        exit;
+    }
 
     // Check if slides are empty
     if (!isset($slides) || $slides === null) {
@@ -28,6 +52,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate and sanitize the slides using the function from validate.php
     $sanitizedSlides = validateAndSanitizeSlides($slides);
+
+    // Check if sanitized slides are empty
+    if (empty($sanitizedSlides)) {
+        echo "<script>";
+        echo "alert('Please add valid presentation content.');";
+        echo "window.location.href = 'create-presentation.php';";
+        echo "</script>";
+        exit;
+    }
 
     // Save the sanitized presentation to the database
     $stmt = $db->prepare("INSERT INTO presentations (topic, tag, content) VALUES (:topic, :tag, :content)");
@@ -51,20 +84,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $stmt = $db->prepare("SELECT DISTINCT tag FROM presentations");
 $stmt->execute();
 $existingTags = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+// Split the existing tags into individual tags
+$existingTags = splitTags(implode(',', $existingTags));
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Presentation Creator</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/create-presentation.css">
     <script src="../js/create-presentation.js"></script>
 </head>
 <body>
-    <a class="navButton" href="index.php">WebSlides</a>
+    <a class="nav-button" href="index.php">WebSlides</a>
     <h1>Create a Presentation</h1>
 
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -72,13 +105,13 @@ $existingTags = $stmt->fetchAll(PDO::FETCH_COLUMN);
         <input type="text" name="title" required><br>
 
         <label id="tagsLabel" for="tags">Tags:</label>
-        <input id="tagsInput" type="text" name="title" placeholder="Enter tags separated by comma" required><br>
+        <textarea id="tagsTextarea" name="tags" placeholder="Enter tags separated by comma" maxlength="50" required></textarea><br>
 
         <div id="existingTags">
             <label>Existing Tags:</label>
             <div id="tagList">
                 <?php foreach ($existingTags as $tag): ?>
-                    <span class="tag"><?php echo $tag; ?></span>
+                    <button type="button" class="tag"><?php echo $tag; ?></button>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -91,7 +124,7 @@ $existingTags = $stmt->fetchAll(PDO::FETCH_COLUMN);
         </div>
 
         <br>
-        <input type="submit" value="Create Presentation">
+        <input id="create-presentation-button" type="submit" value="Create Presentation">
     </form>
 
     <h2>Preview:</h2>

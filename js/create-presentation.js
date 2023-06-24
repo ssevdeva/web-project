@@ -47,11 +47,14 @@ document.addEventListener("DOMContentLoaded", function() {
       }
   
       // Check if at least one tag is entered
-      var tags = tagsTextarea.value.split(',');
-      var trimmedTags = tags.map(function(tag) {
+      if (tagsTextarea == null) {
+        return false;
+      }
+      var tags = tagsTextarea.value.trim(); // Trim the input value
+      var trimmedTags = tags.split(',').map(function(tag) {
         return tag.trim();
       });
-  
+      
       if (trimmedTags.length === 1 && trimmedTags[0] === '') {
         alert('Please enter at least one tag.');
         return false;

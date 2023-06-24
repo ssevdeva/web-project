@@ -1,17 +1,19 @@
 @import 'colors.css';
 
 body {
-    font-family: 'Alegreya Sans', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 20px;
     background-color: var(--color-background);
+    background-size: cover;
+    position: relative;
   }
   
   h1 {
     color: #434BD9;
   }
 
-  .navButton {
+  .nav-button {
     float: right;
     font-size: 16px;
     text-decoration: none;
@@ -42,15 +44,26 @@ body {
     margin-bottom: 5px;
   }
   
-  #tagsInput {
+  #tagsTextarea {
     width: 40%;
+    height: 1.3em;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    resize: none; /* Disable textarea resizing */
   }
   
   button[type="button"] {
+    background-color: #434BD9;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #create-presentation-button {
     background-color: #434BD9;
     color: #fff;
     padding: 10px 20px;
