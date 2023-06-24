@@ -26,7 +26,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
+
     // Retrieve the presentation data from the form
     $title = trim($_POST['title']);
     $slides = $_POST['slides'];
@@ -69,15 +69,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindValue(':content', serialize($sanitizedSlides));
     $stmt->execute();
 
-    // Prompt the user to download the presentation
-    echo "<script>";
-    echo "if (confirm('Presentation created successfully! Do you want to download it?')) {";
-    echo "    window.location.href = 'download.php?id=" . $db->lastInsertId() . "';";
-    echo "} else {";
-    echo "    window.location.href = 'create-presentation.php';";
-    echo "}";
-    echo "</script>";
-    exit;
+    // Retrieve the last inserted presentation ID
+    $lastInsertId = $db->lastInsertId();
+
+// Prompt the user to download the presentation
+echo "<script>";
+echo "document.addEventListener('DOMContentLoaded', function() {";
+echo "    if (confirm('Presentation created successfully! Do you want to download it?')) {";
+echo "        var downloadLink = document.createElement('a');";
+echo "        downloadLink.href = 'download.php?id=" . $lastInsertId . "';";
+echo "        downloadLink.download = 'presentation.html';";
+echo "        downloadLink.style.display = 'none';";
+echo "        document.body.appendChild(downloadLink);";
+echo "        downloadLink.click();";
+echo "        document.body.removeChild(downloadLink);";
+echo "     };";
+echo "window.location.href = 'create-presentation.php';";
+echo "});";
+echo "</script>";
+exit;
 }
 
 // Fetch existing tags from the database

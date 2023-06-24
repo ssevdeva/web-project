@@ -1,21 +1,72 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once 'db-config.php';
 
-// Retrieve the presentation ID from the URL parameter
-$id = $_GET['id'];
+function buildPresentation($slides) {
+    $html = '<html>';
+    $html .= '<head>';
+    // Add any necessary stylesheets or scripts
+    $html .= '</head>';
+    $html .= '<body>';
 
-// Retrieve the presentation data from the database
+    foreach ($slides as $slide) {
+        $html .= '<section>';
+        $html .= $slide;
+        $html .= '</section>';
+    }
+
+    $html .= '</body>';
+    $html .= '</html>';
+
+    return $html;
+}
+
+// Check if the presentation ID is provided
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    echo "<script>";
+    echo "alert('Invalid presentation ID.');";
+    echo "window.location.href = 'create-presentation.php';";
+    echo "</script>";
+    exit;
+}
+
+// Retrieve the presentation ID
+$presentationId = $_GET['id'];
+
+// Establish database connection
+$db = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// Fetch the presentation from the database using the ID
 $stmt = $db->prepare("SELECT * FROM presentations WHERE id = :id");
-$stmt->bindParam(':id', $id);
+$stmt->bindValue(':id', $presentationId);
 $stmt->execute();
 $presentation = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Generate a file name for the download
-$fileName = 'presentation_' . $presentation['id'] . '.txt';
+// Check if the presentation exists
+if (!$presentation) {
+    echo "<script>";
+    echo "alert('Presentation not found.');";
+    echo "window.location.href = 'create-presentation.php';";
+    echo "</script>";
+    exit;
+}
 
-// Set the appropriate headers for the download
-header('Content-Type: text/plain');
+// Get the topic of the presentation
+$topic = $presentation['topic'];
+
+// Download the presentation
+$fileName = str_replace(' ', '_', trim($topic)) . ".html";
+$fileContent = buildPresentation(unserialize($presentation['content']));
+
+// Set the appropriate headers for downloading
+header('Content-Type: text/html');
 header('Content-Disposition: attachment; filename="' . $fileName . '"');
+header('Content-Length: ' . strlen($fileContent));
 
-// Output the presentation content
-echo $presentation['slides'];
+echo $fileContent;
+
+exit;
+?>
