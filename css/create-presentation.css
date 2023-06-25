@@ -1,98 +1,127 @@
 @import 'colors.css';
 
 body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: var(--color-background);
-    background-size: cover;
-    position: relative;
-  }
-  
-  h1 {
-    color: #434BD9;
-  }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background-color: var(--color-background);
+  background-size: cover;
+  position: relative;
+  color: var(--color-text)
+}
 
-  .nav-button {
-    float: right;
-    font-size: 16px;
-    text-decoration: none;
-    color: #333;
-    padding: 5px 10px;
-    border: 1px solid #333;
-    border-radius: 4px;
-  }
-  
-  form {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  input[type="text"] {
-    width: 25%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
+.navbar {
+  background-color: var(--color-accent);
+  padding: 15px 30px 15px 15px;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
 
-  #tags-label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  #tags-textarea {
-    width: 40%;
-    height: 1.3em;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: none;
-  }
-  
-  button[type="button"] {
-    background-color: #434BD9;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+main {
+  padding: 20px;
+}
 
-  #create-presentation-button {
-    background-color: #434BD9;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button[type="submit"] {
-    background-color: #A0F294;
-  }
-  
-  #slides-container textarea {
-    width: 50%;
-    height: 100px;
-    padding: 10px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  #preview-container {
-    margin-top: 20px;
-  }
-  
-  .preview-slide {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
+h1 {
+  font-size: 28px;
+  color: var(--color-text);
+}
+
+.home-button {
+  margin-right: 10px;
+  font-size: 20px;
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 4px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.home-button:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"] {
+  width: 25%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="button"] {
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="button"]:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+#add-slide {
+  background-color: var(--color-warning);
+}
+
+.tag {
+  background-color: var(--color-secondary);
+}
+
+#existing-tags-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#tags-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#tags-textarea {
+  width: 40%;
+  height: 1.3em;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}
+
+#create-presentation-button {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#slides-container textarea {
+  width: 50%;
+  height: 100px;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#preview-container {
+  margin-top: 20px;
+}
+
+.preview-slide {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}

@@ -6,10 +6,12 @@
     <link rel="stylesheet" type="text/css" href="../css/index.css">
 </head>
 <body>
-    <div class="container">
+    <header class="navbar">
         <h1>Web Slides</h1>
-        <a class ="navButton" href="create-presentation.php">Create Presentation</a>
+        <a class="navButton" href="create-presentation.php">Create Presentation</a>
+    </header>
 
+    <div class="container">
         <?php
         require_once 'db-config.php';
 
@@ -21,7 +23,7 @@
 
         if ($presentations) {
             echo '<table class="table">';
-            echo '<tr><th>Add</th><th>ID</th><th>Title</th><th>Tags</th><th></th></tr>';
+            echo '<tr><th>Add</th><th>ID</th><th>Title</th><th>Tags</th><th>Actions</th></tr>';
 
             foreach ($presentations as $presentation) {
                 echo '<tr>';
@@ -29,7 +31,7 @@
                 echo '<td>' . $presentation['id'] . '</td>';
                 echo '<td>' . $presentation['topic'] . '</td>';
                 echo '<td>' . $presentation['tag'] . '</td>';
-                echo '<td><a href="delete.php?id=' . $presentation['id'] . '"><i class="fas fa-trash-alt"></i></a></td>';
+                echo '<td class="delete-row"><a href="delete.php?id=' . $presentation['id'] . '"><i class="fas fa-trash-alt delete"></i></a></td>';
                 echo '</tr>';
             }
 

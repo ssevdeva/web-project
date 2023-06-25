@@ -94,41 +94,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Presentation Creator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="../css/create-presentation.css">
 </head>
 <body>
-    <a class="nav-button" href="index.php">WebSlides</a>
-    <h1>Create a Presentation</h1>
+    <header class="navbar">
+        <div class="home-button-conatiner">
+            <a class="home-button" href="index.php"><i class="fas fa-home"></i></a>
+        </div>
+        <h1>Create a Presentation</h1>
+    </header>
 
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <label for="title-input">Presentation Title:</label>
-        <input id="title-input" type="text" name="title" required><br>
+    <main>
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <label for="title-input">Presentation Title:</label>
+            <input id="title-input" type="text" name="title" required><br>
 
-        <label id="tags-label" for="tags-textarea">Tags:</label>
-        <textarea id="tags-textarea" name="tags" placeholder="Enter tags separated by comma" maxlength="50" required></textarea><br>
+            <label id="tags-label" for="tags-textarea">Tags:</label>
+            <textarea id="tags-textarea" name="tags" placeholder="Enter tags separated by comma" maxlength="50" required></textarea><br>
 
-        <div id="existingTags">
-            <label>Existing Tags:</label>
-            <div id="tag-list">
-                <?php foreach ($existingTags as $tag): ?>
-                    <button type="button" class="tag" onclick="addTag('<?php echo $tag; ?>')"><?php echo $tag; ?></button>
-                <?php endforeach; ?>
+            <div id="existingTags">
+                <label id="existing-tags-label">Existing Tags:</label>
+                <div id="tag-list">
+                    <?php foreach ($existingTags as $tag): ?>
+                        <button type="button" class="tag" onclick="addTag('<?php echo $tag; ?>')"><?php echo $tag; ?></button>
+                    <?php endforeach; ?>
+                </div>
             </div>
-        </div>
 
-        <h3>Slides:</h3>
-        <button type="button" id="add-slide">Add Slide</button>
+            <h3>Slides:</h3>
+            <button type="button" id="add-slide">Add Slide</button>
 
-        <div id="slides-container">
+            <div id="slides-container">
             <!-- Slide input fields will be dynamically added here -->
-        </div>
+            </div>
 
-        <br>
-        <input id="create-presentation-button" type="submit" value="Create Presentation">
-    </form>
+            <br>
+            <input id="create-presentation-button" type="submit" value="Create Presentation">
+        </form>
 
-    <h2>Preview:</h2>
-    <div id="preview-container"></div>
+        <h2>Preview:</h2>
+        <div id="preview-container"></div>
+    </main>
     <script src="../js/create-presentation.js"></script>
 </body>
 </html>
