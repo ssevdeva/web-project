@@ -52,7 +52,7 @@ function buildPresentation($slides, $title) {
     $navigation->appendChild($nextButton);
 
     // Contents sidebar
-    $contents = $dom->createElement('div');
+    $contents = $dom->createElement('nav');
     $contents->setAttribute('class', 'slideshow-contents');
     $slideshow->appendChild($contents);
 
@@ -105,6 +105,7 @@ function buildPresentation($slides, $title) {
                 });
             });
         });
+
         function showSlide(n) {
             var slides = document.getElementsByClassName("slide");
             var contentsLinks = document.querySelectorAll(".slideshow-contents a");
@@ -120,6 +121,7 @@ function buildPresentation($slides, $title) {
             contentsLinks[n - 1].classList.add("active");
             currentSlide = n;
         }
+
         function navigateSlide(n) {
             showSlide(currentSlide += n);
         }

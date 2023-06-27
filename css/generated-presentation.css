@@ -12,11 +12,12 @@ body {
 
 .slideshow-navigation {
     margin-bottom: 20px;
+    margin-left: 200px;;
 }
 
 .slideshow-navigation button {
     background-color: #333;
-    color: #fff;
+    color: white;
     padding: 8px 16px;
     border: none;
     cursor: pointer;
@@ -24,38 +25,49 @@ body {
     margin-right: 10px;
 }
 
-.slideshow-contents ul {
+.slideshow-contents {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    justify-content: center;
 }
 
-.slideshow-contents li {
-    margin: 0 5px;
+nav li {
+    margin: 0;
 }
 
-.slideshow-contents a {
-    color: #333;
+nav a {
+    display: block;
+    color: grey;
     text-decoration: none;
     padding: 8px 12px;
-    border-radius: 4px;
-    background-color: #fff;
+    border-bottom: 1px solid #999;
     transition: background-color 0.3s ease;
 }
 
-.slideshow-contents a:hover {
-    background-color: #333;
-    color: #fff;
+nav a:hover {
+    background-color: #999;
+    color: white;
 }
 
 .slide {
+    margin-right: 20px;
     margin-top: 20px;
     display: none;
     padding: 20px;
     background-color: #fff;
     border-radius: 4px;
+    margin-left: 220px;
 }
 
 .slide.active {
