@@ -5,6 +5,8 @@ ini_set('display_errors', 1);
 require_once 'db-config.php';
 
 function buildPresentation($slides, $title) {
+    $cssFilePath = '../css/generated-presentation.css';
+
     $dom = new DOMDocument('1.0', 'UTF-8');
     $dom->formatOutput = true;
 
@@ -22,6 +24,15 @@ function buildPresentation($slides, $title) {
 
     $titleElement = $dom->createElement('title', $title);
     $head->appendChild($titleElement);
+
+    // CSS styles
+    if (!empty($cssFilePath) && file_exists($cssFilePath)) {
+        $style = $dom->createElement('style');
+        $style->setAttribute('type', 'text/css');
+        $cssContent = file_get_contents($cssFilePath);
+        $style->appendChild($dom->createTextNode($cssContent));
+        $head->appendChild($style);
+    }
 
     $slideshow = $dom->createElement('div');
     $slideshow->setAttribute('class', 'slideshow');
