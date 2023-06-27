@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input id="create-presentation-button" type="submit" value="Create Presentation">
         </form>
 
-        <h2>Preview:</h2>
+        <h3>Preview:</h3>
         <div id="preview-container"></div>
     </main>
     <script src="../js/create-presentation.js"></script>

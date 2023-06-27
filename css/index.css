@@ -52,8 +52,8 @@ h1 {
 }
 
 .navButton:hover {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(84, 92, 248, 0.4);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 
 .table {

@@ -65,16 +65,24 @@ button[type="button"] {
   cursor: pointer;
 }
 
-button[type="button"]:hover {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-}
-
 #add-slide {
   background-color: var(--color-warning);
+  min-width: 100px;
+}
+
+#add-slide:hover {
+  background-color: #F2BE7E;
+  font-weight: 600;
 }
 
 .tag {
   background-color: var(--color-secondary);
+  min-width: 80px;
+}
+
+.tag:hover {
+  background-color: #f2b3e1;
+  font-weight: 600;
 }
 
 #existing-tags-label {
@@ -104,14 +112,22 @@ button[type="button"]:hover {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
+  min-height: 40px;
+}
+
+#create-presentation-button:hover {
+  background-color: rgb(95, 102, 235);
+  font-weight: 500;
+  box-shadow: 0 0 20px rgba(103, 110, 245, 0.4);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 
 #slides-container textarea {
   width: 50%;
   height: 100px;
   padding: 10px;
-  margin-bottom: 10px;
-  margin-right: 10px;
+  margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -124,4 +140,8 @@ button[type="button"]:hover {
   border: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 10px;
+}
+
+h3 {
+  margin-top: 20px;
 }
