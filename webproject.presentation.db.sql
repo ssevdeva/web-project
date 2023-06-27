@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS Presentations;
+CREATE DATABASE IF NOT EXISTS Presentations CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Create user and grant privileges
 CREATE USER 'webadmin'@'localhost' IDENTIFIED BY 'webadminpass';
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS presentations (
   id INT AUTO_INCREMENT PRIMARY KEY,
   topic VARCHAR(255) NOT NULL,
   tag VARCHAR(255) NOT NULL,
-  content TEXT NOT NULL
+  content TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 );
 
 -- Insert the presentations

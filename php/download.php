@@ -9,53 +9,68 @@ function buildPresentation($slides, $title) {
     $html .= '<head>';
     $html .= '<meta content="width=device-width, initial-scale=1" name="viewport" charset="UTF-8">';
     $html .= '<title>' . $title . '</title>';
-    // $html .= '<style>';
-    // $html .= '.navbar { background-color: #333; color: #fff; padding: 10px; }';
-    // $html .= '.navbar h1 { margin: 0; }';
-    // $html .= '.slide { padding: 20px; }';
-    // $html .= '.navigation { position: fixed; top: 50%; right: 20px; transform: translateY(-50%); }';
-    // $html .= '</style>';
-    $html .= '</head>';
-    $html .= '<body>';
-
-    $html .= '<header>';
-    $html .= '<h1>' . $title . '</h1>';
-    $html .= '<nav>';
-    $html .= '<ul>';
-    $html .= '<li>';
-    $html .= '<button id="prev-btn" title="Previous slide">Previous Slide</button>';
-    $html .= '</li>';
-    $html .= '<li>';
-    $html .= '<span id="slide-number"></span>';
-    $html .= '/';
-    $html .= '<span id="slide-total"></span>';
-    $html .= '</li>';
-    $html .= '<li>';
-    $html .= '<button id="next-btn" title="Next Slide">Next Slide</button>';
-    $html .= '</li>';
-    $html .= '</ul>';
-    $html .= '</nav>';
-    $html .= '</header>';
-
-    // Slides
-    $html .= '<div id="deck">';
-    foreach ($slides as $index => $slide) {
-        $slideNumber = $index + 1;
-        $html .= '<section id="slide-' . $slideNumber . '">';
-        $html .= '<hgroup>';
-        $html .= '<h1>' . $title . '</h1>';
-        $html .= '</hgroup>';
-        $html .= $slide;
-        $html .= '</section>';
-    }
+    $html = '<div class="slideshow">';
+    
+    // Navigation
+    $html .= '<div class="slideshow-navigation">';
+    $html .= '<button class="prev-slide">Prev</button>';
+    $html .= '<button class="next-slide">Next</button>';
     $html .= '</div>';
-
-    $html .= '</body>';
-    $html .= '</html>';
-
+    
+    // Contents sidebar
+    $html .= '<div class="slideshow-contents">';
+    $html .= '<ul>';
+    
+    foreach ($slides as $index => $slide) {
+        $html .= '<li><a href="#slide-' . ($index + 1) . '">Slide ' . ($index + 1) . '</a></li>';
+    }
+    
+    $html .= '</ul>';
+    $html .= '</div>';
+    
+    // Slides
+    foreach ($slides as $index => $slide) {
+        $html .= '<div id="slide-' . ($index + 1) . '" class="slide">';
+        $html .= $slide;
+        $html .= '</div>';
+    }
+    
+    $html .= '</div>';
+    
+    // JavaScript for slideshow functionality
+    $html .= '<script>';
+    $html .= 'var currentSlide = 1;';
+    $html .= 'var totalSlides = ' . count($slides) . ';';
+    $html .= 'document.addEventListener("DOMContentLoaded", function() {';
+    $html .= '  showSlide(currentSlide);';
+    $html .= '  document.querySelector(".prev-slide").addEventListener("click", function() {';
+    $html .= '    navigateSlide(-1);';
+    $html .= '  });';
+    $html .= '  document.querySelector(".next-slide").addEventListener("click", function() {';
+    $html .= '    navigateSlide(1);';
+    $html .= '  });';
+    $html .= '});';
+    $html .= 'function showSlide(n) {';
+    $html .= '  var slides = document.getElementsByClassName("slide");';
+    $html .= '  var contentsLinks = document.getElementsByTagName("a");';
+    $html .= '  if (n > slides.length) { currentSlide = 1; }';
+    $html .= '  if (n < 1) { currentSlide = slides.length; }';
+    $html .= '  for (var i = 0; i < slides.length; i++) {';
+    $html .= '    slides[i].style.display = "none";';
+    $html .= '  }';
+    $html .= '  for (var i = 0; i < contentsLinks.length; i++) {';
+    $html .= '    contentsLinks[i].classList.remove("active");';
+    $html .= '  }';
+    $html .= '  slides[currentSlide - 1].style.display = "block";';
+    $html .= '  contentsLinks[currentSlide - 1].classList.add("active");';
+    $html .= '}';
+    $html .= 'function navigateSlide(n) {';
+    $html .= '  showSlide(currentSlide += n);';
+    $html .= '}';
+    $html .= '</script>';
+    
     return $html;
 }
-
 
 // Check if the presentation ID is provided
 if (!isset($_GET['id']) || empty($_GET['id'])) {
@@ -91,7 +106,7 @@ $fileName = str_replace(' ', '_', trim($topic)) . ".html";
 $fileContent = buildPresentation(unserialize($presentation['content']), $topic);
 
 // Set the appropriate headers for downloading
-header('Content-Type: text/html');
+header('Content-Type: text/html; charset=UTF-8');
 header('Content-Disposition: attachment; filename="' . $fileName . '"');
 header('Content-Length: ' . strlen($fileContent));
 

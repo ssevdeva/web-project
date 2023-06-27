@@ -75,9 +75,13 @@ function addTag(tagText) {
   var tagsTextarea = document.getElementById('tags-textarea');
   var currentTags = tagsTextarea.value.trim();
 
-  if (currentTags.length === 0) {
-        tagsTextarea.value = tagText;
-  } else {
-    tagsTextarea.value = currentTags + ',' + tagText;
+  var tagArray = currentTags !== '' ? currentTags.split(',') : [];
+
+  if (tagArray.includes(tagText)) {
+    return;
   }
+
+  tagArray.push(tagText);
+  var updatedTags = tagArray.join(',');
+  tagsTextarea.value = updatedTags;
 }
