@@ -78,6 +78,6 @@ function addTag(tagText) {
   if (currentTags.length === 0) {
         tagsTextarea.value = tagText;
   } else {
-    tagsTextarea.value = currentTags + ', ' + tagText;
+    tagsTextarea.value = currentTags + ',' + tagText;
   }
 }

@@ -113,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label id="tags-label" for="tags-textarea">Tags:</label>
             <textarea id="tags-textarea" name="tags" placeholder="Enter tags separated by comma" maxlength="50" required></textarea><br>
 
+            <!-- Load existing tags -->
             <div id="existingTags">
                 <label id="existing-tags-label">Existing Tags:</label>
                 <div id="tag-list">
