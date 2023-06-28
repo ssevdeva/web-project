@@ -19,6 +19,28 @@ function splitTags($tagsString) {
 $db = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+$presentationId = -1;
+
+// Retrieve presentation details from the database based on the provided presentation ID
+if (isset($_GET['id'])) {
+    $presentationId = $_GET['id'];
+
+    $stmt = $db->prepare("SELECT * FROM presentations WHERE id = :id");
+    $stmt->bindValue(':id', $presentationId);
+    $stmt->execute();
+
+    $presentation = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$presentation) {
+        // Presentation with the provided ID does not exist
+        echo "Presentation not found.";
+        exit;
+    }
+
+    // Retrieve the slides content from the database and unserialize it
+    $slidesContent = unserialize($presentation['content']);
+}
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -29,15 +51,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($title)) {
         echo "<script>";
         echo "alert('Please enter a valid presentation title.');";
-        echo "window.location.href = 'create-presentation.php';";
+        echo "window.location.href = 'edit-presentation.php';";
         echo "</script>";
         exit;
     }
 
     if (!isset($slides) || $slides === null) {
         echo "<script>";
-        echo "alert('Please add slides before creating the presentation.');";
-        echo "window.location.href = 'create-presentation.php';";
+        echo "alert('Please add slides to the presentation.');";
+        echo "window.location.href = 'edit-presentation.php';";
         echo "</script>";
         exit;
     }
@@ -50,33 +72,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($sanitizedSlides)) {
         echo "<script>";
         echo "alert('Please add valid presentation content.');";
-        echo "window.location.href = 'create-presentation.php';";
+        echo "window.location.href = 'edit-presentation.php';";
         echo "</script>";
         exit;
     }
 
-    // Save the sanitized presentation to the database
-    $stmt = $db->prepare("INSERT INTO presentations (topic, tag, content) VALUES (:topic, :tag, :content)");
+    // Update the existing presentation in the database
+    $stmt = $db->prepare("UPDATE presentations SET topic = :topic, tag = :tag, content = :content WHERE id = :id");
     $stmt->bindValue(':topic', $title);
     $stmt->bindValue(':tag', $sanitizedTags);
     $stmt->bindValue(':content', serialize($sanitizedSlides));
+    $stmt->bindValue(':id', $presentationId); // Add this line to bind the presentation ID
     $stmt->execute();
 
-    $lastInsertId = $db->lastInsertId();
 
     // Prompt the user to download the presentation
     echo "<script>";
     echo "document.addEventListener('DOMContentLoaded', function() {";
-    echo "    if (confirm('Presentation created successfully! Do you want to download it?')) {";
+    echo "    if (confirm('Presentation updated successfully! Do you want to download it?')) {";
     echo "        var downloadLink = document.createElement('a');";
-    echo "        downloadLink.href = 'download.php?id=" . $lastInsertId . "';";
+    echo "        downloadLink.href = 'download.php?id=" . $presentationId . "';";
     echo "        downloadLink.download = 'presentation.html';";
     echo "        downloadLink.style.display = 'none';";
     echo "        document.body.appendChild(downloadLink);";
     echo "        downloadLink.click();";
     echo "        document.body.removeChild(downloadLink);";
     echo "     };";
-    echo "window.location.href = 'create-presentation.php';";
+    echo "window.location.href = 'edit-presentation.php';";
     echo "});";
     echo "</script>";
     exit;
@@ -93,9 +115,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create Presentation</title>
+    <title>Edit Presentation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
-    <link rel="stylesheet" type="text/css" href="../css/create-presentation.css">
+    <link rel="stylesheet" type="text/css" href="../css/edit-presentation.css">
     <link rel="stylesheet" type="text/css" href="../css/preview.css">
 </head>
 <body>
@@ -103,16 +125,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="home-button-conatiner">
             <a class="home-button" href="index.php"><i class="fas fa-home"></i></a>
         </div>
-        <h1>Create a Presentation</h1>
+        <h1>Edit Presentation</h1>
     </header>
 
     <main>
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <label for="title-input">Presentation Title:</label>
-            <input id="title-input" type="text" name="title" required><br>
+            <input id="title-input" type="text" name="title" value="<?php echo $presentation['topic']; ?>" required><br>
 
             <label id="tags-label" for="tags-textarea">Tags:</label>
-            <textarea id="tags-textarea" name="tags" placeholder="Enter tags separated by comma" maxlength="50" required></textarea><br>
+            <textarea id="tags-textarea" name="tags" placeholder="Enter tags separated by comma" maxlength="50" required><?php echo $presentation['tag']; ?></textarea><br>
 
             <!-- Load existing tags -->
             <div id="existingTags">
@@ -128,16 +150,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="button" id="add-slide">Add Slide</button>
 
             <div id="slides-container">
-            <!-- Slide input fields will be dynamically added here -->
+                <?php if (isset($slidesContent) && !empty($slidesContent)): ?>
+                    <?php foreach ($slidesContent as $slide): ?>
+                        <div class="slide">
+                            <textarea class="slide-textarea" name="slides[]" rows="8" cols="40"><?php echo $slide; ?></textarea>
+                            <button type="button" class="remove-slide">Remove</button>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
-
             <br>
-            <input id="create-presentation-button" type="submit" value="Create Presentation">
+            <input id="update-presentation-button" type="submit" value="Update Presentation">
         </form>
 
         <h3>Preview:</h3>
         <div id="preview-container"></div>
     </main>
-    <script src="../js/create-presentation.js"></script>
+    <script src="../js/edit-presentation.js"></script>
 </body>
 </html>

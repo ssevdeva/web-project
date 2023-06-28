@@ -23,7 +23,13 @@
 
         if ($presentations) {
             echo '<table class="table">';
-            echo '<tr><th>Add</th><th>ID</th><th>Title</th><th>Tags</th><th>Actions</th></tr>';
+            echo '<tr>
+                    <th id="add-header">Add</th>
+                    <th id="id-header">ID</th>
+                    <th id="title-header">Title</th>
+                    <th id="tags-header">Tags</th>
+                    <th id="actions-header">Actions</th>
+                  </tr>';
 
             foreach ($presentations as $presentation) {
                 echo '<tr>';
@@ -31,7 +37,10 @@
                 echo '<td>' . $presentation['id'] . '</td>';
                 echo '<td>' . $presentation['topic'] . '</td>';
                 echo '<td>' . $presentation['tag'] . '</td>';
-                echo '<td class="delete-row"><a href="delete.php?id=' . $presentation['id'] . '"><i class="fas fa-trash-alt delete"></i></a></td>';
+                echo '<td class="actions">
+                        <a href="edit-presentation.php?id=' . $presentation['id'] . '"><i class="fas fa-edit edit"></i></a>
+                        <a href="delete.php?id=' . $presentation['id'] . '"><i class="fas fa-trash-alt delete"></i></a>
+                      </td>';
                 echo '</tr>';
             }
 

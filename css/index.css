@@ -70,7 +70,18 @@ h1 {
 
 .table th {
   font-size: 18px;
+}
+
+#add-header,
+#id-header,
+#title-header,
+#tags-header {
   text-align: left;
+}
+
+#actions-header,
+.actions {
+  text-align: center;
 }
 
 .table td input[type="checkbox"] {
@@ -78,12 +89,20 @@ h1 {
 }
 
 .delete {
-  text-decoration: none;
   color: var(--color-warning);
 }
 
 .delete:hover {
   color: red;
+}
+
+.edit {
+  color: var(--color-secondary);
+  cursor: pointer;
+}
+
+.edit:hover {
+  color: blue;
 }
 
 .no-presentations {

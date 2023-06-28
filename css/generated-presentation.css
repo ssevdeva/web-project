@@ -16,7 +16,7 @@ header h1 {
 }
 
 body {
-    font-family: 'Marker Felt', Impact, Arial, sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     background-color: #f2f2f2;
     color: #333;
@@ -153,11 +153,6 @@ iframe.demo {
 section {
     page-break-after: always;
     clear: both;
-}
-
-/* Additional styles */
-body {
-    background: #f5f6f6;
 }
 
 #deck h1 {

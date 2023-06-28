@@ -102,7 +102,7 @@ button[type="button"] {
   resize: none;
 }
 
-#create-presentation-button {
+#update-presentation-button {
   background-color: var(--color-primary);
   color: #fff;
   padding: 10px 20px;
@@ -113,7 +113,7 @@ button[type="button"] {
   min-height: 40px;
 }
 
-#create-presentation-button:hover {
+#update-presentation-button:hover {
   background-color: rgb(95, 102, 235);
   font-weight: 500;
   box-shadow: 0 0 20px rgba(103, 110, 245, 0.4);
