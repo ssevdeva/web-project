@@ -34,14 +34,15 @@ function buildPresentation($slides, $title) {
         $head->appendChild($style);
     }
 
-    $slideshow = $dom->createElement('div');
-    $slideshow->setAttribute('class', 'slideshow');
-    $html->appendChild($slideshow);
-
+    $header = $dom->createElement("header");
+    $presentationTitle = $dom->createElement("h1", $title);
+    $header->appendChild($presentationTitle);
+    $html->appendChild($header);
+    
     // Navigation
     $navigation = $dom->createElement('div');
     $navigation->setAttribute('class', 'slideshow-navigation');
-    $slideshow->appendChild($navigation);
+    $header->appendChild($navigation);
 
     $prevButton = $dom->createElement('button', 'Prev');
     $prevButton->setAttribute('class', 'prev-slide');
@@ -50,6 +51,10 @@ function buildPresentation($slides, $title) {
     $nextButton = $dom->createElement('button', 'Next');
     $nextButton->setAttribute('class', 'next-slide');
     $navigation->appendChild($nextButton);
+
+    $slideshow = $dom->createElement('div');
+    $slideshow->setAttribute('class', 'slideshow');
+    $html->appendChild($slideshow);
 
     // Contents sidebar
     $contents = $dom->createElement('nav');
@@ -68,18 +73,22 @@ function buildPresentation($slides, $title) {
         $ul->appendChild($li);
 
         $a = $dom->createElement('a', $slideName);
-        $a->setAttribute('href', '#slide-' . ($index + 1));
+        $a->setAttribute('href', ($index + 1));
         $li->appendChild($a);
     }
 
+    $deck = $dom->createElement('div');
+    $deck->setAttribute('id', 'deck');
+    $slideshow->appendChild($deck);
+
     // Slides
     foreach ($slides as $index => $slide) {
-        $slideDiv = $dom->createElement('div');
-        $slideDiv->setAttribute('id', 'slide-' . ($index + 1));
-        $slideDiv->setAttribute('class', 'slide');
-        $slideshow->appendChild($slideDiv);
+        $slideSection = $dom->createElement('section');
+        $slideSection->setAttribute('id', ($index + 1));
+        $slideSection->setAttribute('class', 'slide');
+        $deck->appendChild($slideSection);
 
-        $slideDiv->appendChild($dom->createCDATASection($slide));
+        $slideSection->appendChild($dom->createCDATASection($slide));
     }
 
     // JavaScript for slideshow functionality
@@ -101,7 +110,7 @@ function buildPresentation($slides, $title) {
                 link.addEventListener("click", function(event) {
                     event.preventDefault();
                     var slideId = this.getAttribute("href").substring(1);
-                    showSlide(parseInt(slideId.replace("slide-", "")));
+                    showSlide(parseInt(slideId));
                 });
             });
         });
@@ -131,7 +140,6 @@ function buildPresentation($slides, $title) {
     $htmlContent = $dom->saveHTML();
     return $htmlContent;
 }
-
 
 
 // Check if the presentation ID is provided
