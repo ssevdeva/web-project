@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "document.addEventListener('DOMContentLoaded', function() {";
     echo "    if (confirm('Presentation created successfully! Do you want to download it?')) {";
     echo "        var downloadLink = document.createElement('a');";
-    echo "        downloadLink.href = 'download.php?id=" . $lastInsertId . "';";
+    echo "        downloadLink.href = 'download.php?id=" . $lastInsertId . "&createPresentation=true';";
     echo "        downloadLink.download = 'presentation.html';";
     echo "        downloadLink.style.display = 'none';";
     echo "        document.body.appendChild(downloadLink);";

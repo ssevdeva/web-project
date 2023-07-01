@@ -142,11 +142,11 @@ function buildPresentation($slides, $title) {
 }
 
 
-// Check if the presentation ID is provided
+// Check if the presentation ID and createPresentation variable are provided
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     echo "<script>";
     echo "alert('Invalid presentation ID.');";
-    echo "window.location.href = 'create-presentation.php';";
+    echo "window.location.href = " . (isset($createPresentation) && $createPresentation ? "'create-presentation.php'" : "'index.php'") . ";";
     echo "</script>";
     exit;
 }
@@ -164,7 +164,7 @@ $presentation = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$presentation) {
     echo "<script>";
     echo "alert('Presentation not found.');";
-    echo "window.location.href = 'create-presentation.php';";
+    echo "window.location.href = " . (isset($createPresentation) && $createPresentation ? "'create-presentation.php'" : "'edit-presentation.php'") . " ?? 'index.php';";
     echo "</script>";
     exit;
 }

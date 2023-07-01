@@ -3,13 +3,28 @@ document.addEventListener("DOMContentLoaded", function () {
     // Handle dynamic slide creation and preview
     document.getElementById('add-slide').addEventListener('click', function () {
         var slidesContainer = document.getElementById('slides-container');
-        var previewContainer = document.getElementById('preview-container');
 
         // Create slide content input field
+        var slideContainer = document.createElement('div');
+        slideContainer.className = 'slide';
+
         var slideContentInput = document.createElement('textarea');
         slideContentInput.setAttribute('name', 'slides[]');
         slideContentInput.setAttribute('placeholder', 'Enter slide content in HTML format');
-        slidesContainer.appendChild(slideContentInput);
+        slideContainer.appendChild(slideContentInput);
+
+        // Create remove button for the slide
+        var removeButton = document.createElement('button');
+        removeButton.setAttribute('type', 'button');
+        removeButton.className = 'remove-slide';
+        removeButton.textContent = 'X';
+        removeButton.addEventListener('click', function () {
+            slideContainer.parentNode.removeChild(slideContainer);
+            updatePreview();
+        });
+        slideContainer.appendChild(removeButton);
+
+        slidesContainer.appendChild(slideContainer);
 
         // Update the preview container when the input value changes
         slideContentInput.addEventListener('input', function () {
@@ -22,19 +37,34 @@ document.addEventListener("DOMContentLoaded", function () {
         var previewContainer = document.getElementById('preview-container');
         previewContainer.innerHTML = '';
 
-        var slideContentInputs = document.querySelectorAll('textarea[name="slides[]"]');
+        var slideContainers = document.querySelectorAll('.slide');
 
-        // Iterate over each slide content input and update the preview container
-        slideContentInputs.forEach(function (input) {
-            var previewSlide = document.createElement('div');
-            previewSlide.className = 'preview-slide';
-            previewSlide.innerHTML = input.value;
-            previewContainer.appendChild(previewSlide);
+        // Iterate over each slide container and update the preview container
+        slideContainers.forEach(function (slideContainer) {
+            var slideContentInput = slideContainer.querySelector('textarea[name="slides[]"]');
+            var slideContent = slideContentInput.value.trim();
+
+            if (slideContent !== '') {
+                var previewSlide = document.createElement('div');
+                previewSlide.className = 'preview-slide';
+                previewSlide.innerHTML = slideContent;
+                previewContainer.appendChild(previewSlide);
+            }
         });
     }
 
     // Load preview sections for existing slides on page load
     updatePreview();
+
+    // Add event listeners to the existing remove buttons
+    var removeButtons = document.querySelectorAll('.remove-slide');
+    removeButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var slideContainer = button.parentNode;
+            slideContainer.parentNode.removeChild(slideContainer);
+            updatePreview();
+        });
+    });
 
     function validateForm() {
         var slides = document.getElementsByName('slides[]');

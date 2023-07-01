@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "document.addEventListener('DOMContentLoaded', function() {";
     echo "    if (confirm('Presentation updated successfully! Do you want to download it?')) {";
     echo "        var downloadLink = document.createElement('a');";
-    echo "        downloadLink.href = 'download.php?id=" . $presentationId . "';";
+    echo "        downloadLink.href = 'download.php?id=" . $presentationId . "&createPresentation=false';";
     echo "        downloadLink.download = 'presentation.html';";
     echo "        downloadLink.style.display = 'none';";
     echo "        document.body.appendChild(downloadLink);";
@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php foreach ($slidesContent as $slide): ?>
                         <div class="slide">
                             <textarea class="slide-textarea" name="slides[]" rows="8" cols="40"><?php echo $slide; ?></textarea>
-                            <button type="button" class="remove-slide">Remove</button>
+                            <button type="button" class="remove-slide">X</button>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>

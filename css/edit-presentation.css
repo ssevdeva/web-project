@@ -56,7 +56,6 @@ input[type="text"] {
 
 button[type="button"] {
   color: #fff;
-  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -65,6 +64,7 @@ button[type="button"] {
 #add-slide {
   background-color: var(--color-warning);
   min-width: 100px;
+  padding: 10px 20px;
 }
 
 #add-slide:hover {
@@ -75,6 +75,7 @@ button[type="button"] {
 .tag {
   background-color: var(--color-secondary);
   min-width: 80px;
+  padding: 10px 20px;
 }
 
 .tag:hover {
@@ -134,3 +135,37 @@ form h3 {
   margin-top: 30px;
   margin-bottom: 10px;
 }
+
+.slide {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .slide textarea {
+    width: 50%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .remove-slide {
+    background-color: #ff5a5a;
+    color: #fff;
+    border: none;
+    padding: 0;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 30px;
+    width: 30px;
+    margin-top: 10px;
+    margin-left: -30px;
+  }
+  
+  .remove-slide:hover {
+    background-color: #ff4242;
+  }
+  
