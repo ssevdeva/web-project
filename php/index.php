@@ -10,7 +10,7 @@
         <h1>Web Slides</h1>
         <div id="buttons-container">
             <a class="navButton" href="create-presentation.php">Create Presentation</a>
-            <a class="navButton" id="merge-button" href="merge-presentations.php">Merge</a>
+            <a class="navButton" id="merge-button" href="merge-presentations.php?ids=">Merge</a>
         </div>
     </header>
 
@@ -37,7 +37,7 @@
             foreach ($presentations as $presentation) {
                 echo '<tr>';
                 echo '<td><input type="checkbox"></td>';
-                echo '<td>' . $presentation['id'] . '</td>';
+                echo '<td class="presentation-id">' . $presentation['id'] . '</td>';
                 echo '<td>' . $presentation['topic'] . '</td>';
                 echo '<td>' . $presentation['tag'] . '</td>';
                 echo '<td class="actions">
@@ -54,5 +54,24 @@
         }
         ?>
     </div>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            var mergeButton = document.getElementById("merge-button");
+            mergeButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                var checkedPresentations = document.querySelectorAll('input[type="checkbox"]:checked');
+                if (checkedPresentations.length < 2) {
+                    alert("Choose at least two presentations for merging.");
+                } else {
+                    var ids = Array.from(checkedPresentations).map(function(checkbox) {
+                        return checkbox.closest("tr").querySelector(".presentation-id").textContent;
+                    });
+                    var mergeLink = mergeButton.href + ids.join(",");
+                    window.location.href = mergeLink;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
