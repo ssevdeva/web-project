@@ -39,6 +39,7 @@
                 echo '<td>' . $presentation['tag'] . '</td>';
                 echo '<td class="actions">
                         <a href="edit-presentation.php?id=' . $presentation['id'] . '"><i class="fas fa-edit edit"></i></a>
+                        <a href="download.php?id=' . $presentation['id'] . '&createPresentation=false"><i class="fas fa-download download"></i></a>
                         <a href="delete.php?id=' . $presentation['id'] . '"><i class="fas fa-trash-alt delete"></i></a>
                       </td>';
                 echo '</tr>';

@@ -90,6 +90,7 @@ h1 {
 
 .delete {
   color: var(--color-warning);
+  cursor: pointer;
 }
 
 .delete:hover {
@@ -102,6 +103,15 @@ h1 {
 }
 
 .edit:hover {
+  color: blue;
+}
+
+.download {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.download:hover {
   color: blue;
 }
 

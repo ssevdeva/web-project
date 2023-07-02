@@ -164,7 +164,7 @@ $presentation = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$presentation) {
     echo "<script>";
     echo "alert('Presentation not found.');";
-    echo "window.location.href = " . (isset($createPresentation) && $createPresentation ? "'create-presentation.php'" : "'edit-presentation.php'") . " ?? 'index.php';";
+    echo "window.location.href = " . (isset($createPresentation) && $createPresentation ? "'create-presentation.php'" : "'index.php'") . ";";
     echo "</script>";
     exit;
 }

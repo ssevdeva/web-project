@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "        downloadLink.click();";
     echo "        document.body.removeChild(downloadLink);";
     echo "     };";
-    echo "window.location.href = 'edit-presentation.php';";
+    echo "window.location.href = 'index.php';";
     echo "});";
     echo "</script>";
     exit;
