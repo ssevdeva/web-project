@@ -34,10 +34,13 @@ function buildPresentation($slides, $title) {
         $head->appendChild($style);
     }
 
+    $body = $dom->createElement("body");
+    $html->appendChild($body);
+
     $header = $dom->createElement("header");
     $presentationTitle = $dom->createElement("h1", $title);
     $header->appendChild($presentationTitle);
-    $html->appendChild($header);
+    $body->appendChild($header);
     
     // Navigation
     $navigation = $dom->createElement('div');
@@ -54,7 +57,7 @@ function buildPresentation($slides, $title) {
 
     $slideshow = $dom->createElement('div');
     $slideshow->setAttribute('class', 'slideshow');
-    $html->appendChild($slideshow);
+    $body->appendChild($slideshow);
 
     // Contents sidebar
     $contents = $dom->createElement('nav');
@@ -73,7 +76,7 @@ function buildPresentation($slides, $title) {
         $ul->appendChild($li);
 
         $a = $dom->createElement('a', $slideName);
-        $a->setAttribute('href', ($index + 1));
+        $a->setAttribute('href', '#' . ($index + 1));
         $li->appendChild($a);
     }
 
@@ -132,7 +135,10 @@ function buildPresentation($slides, $title) {
         }
 
         function navigateSlide(n) {
-            showSlide(currentSlide += n);
+            var newSlide = currentSlide + n;
+            if (newSlide >= 1 && newSlide <= totalSlides) {
+                showSlide(newSlide);
+            }
         }
     '));
     $slideshow->appendChild($script);
