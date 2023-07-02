@@ -8,7 +8,10 @@
 <body>
     <header class="navbar">
         <h1>Web Slides</h1>
-        <a class="navButton" href="create-presentation.php">Create Presentation</a>
+        <div id="buttons-container">
+            <a class="navButton" href="create-presentation.php">Create Presentation</a>
+            <a class="navButton" id="merge-button" href="merge-presentations.php">Merge</a>
+        </div>
     </header>
 
     <div class="container">
