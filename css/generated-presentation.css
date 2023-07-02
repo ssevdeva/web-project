@@ -83,6 +83,11 @@ nav a:hover {
     color: white;
 }
 
+nav a.active {
+    background-color: #999;
+    color: white;
+}
+
 .slide {
     margin-right: 20px;
     margin-top: 20px;
