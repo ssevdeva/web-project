@@ -83,7 +83,7 @@ if (isset($_GET['ids'])) {
     // Prompt the user to download the presentation
     echo "<script>";
     echo "document.addEventListener('DOMContentLoaded', function() {";
-    echo "    if (confirm('Presentation updated successfully! Do you want to download it?')) {";
+    echo "    if (confirm('Presentations merged successfully! Do you want to download the new presentation?')) {";
     echo "        var downloadLink = document.createElement('a');";
     echo "        downloadLink.href = 'download.php?id=" . $presentationId . "&createPresentation=false';";
     echo "        downloadLink.download = 'presentation.html';";
