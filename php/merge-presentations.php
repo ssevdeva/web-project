@@ -85,7 +85,7 @@ if (isset($_GET['ids'])) {
     echo "document.addEventListener('DOMContentLoaded', function() {";
     echo "    if (confirm('Presentations merged successfully! Do you want to download the new presentation?')) {";
     echo "        var downloadLink = document.createElement('a');";
-    echo "        downloadLink.href = 'download.php?id=" . $presentationId . "&createPresentation=false';";
+    echo "        downloadLink.href = 'download.php?id=" . $lastInsertId . "&createPresentation=false';";
     echo "        downloadLink.download = 'presentation.html';";
     echo "        downloadLink.style.display = 'none';";
     echo "        document.body.appendChild(downloadLink);";
